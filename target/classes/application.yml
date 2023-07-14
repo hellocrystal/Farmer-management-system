@@ -1,0 +1,48 @@
+#项目端口和路径
+server:
+  port: 8089
+  servlet:
+    context-path: /garden
+#SpringMVC 视图解析器
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+#设置配置 .action 后缀请求的配置
+    pathmatch:
+      use-suffix-pattern: false
+      use-registered-suffix-pattern: true
+#连接数据库基本信息
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/court2?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    hikari:
+      minimum-idle: 5
+    # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+    # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+    # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+    # 连接池名称
+      pool-name: MyHikariCP
+    # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+    # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+#映射文件所扫描的包路径，首先要增加Mybatis的pom 的支持
+mybatis:
+  type-aliases-package: com.njau.repo.pojo
+  mapper-locations: classpath:sqlmapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

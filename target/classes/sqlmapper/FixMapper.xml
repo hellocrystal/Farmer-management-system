@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njau.repo.mapper.FixMapper">
+    <resultMap id="BaseResultMap" type="com.njau.repo.pojo.FixDO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime"/>
+        <result column="zone" jdbcType="INTEGER" property="zone"/>
+        <result column="room_id" jdbcType="VARCHAR" property="roomId"/>
+        <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime"/>
+        <result column="staff_username" jdbcType="VARCHAR" property="staffUsername"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, content, submit_time, `zone`, room_id, handle_time, staff_username, `state`
+    </sql>
+    <select id="selectByExample" parameterType="com.njau.repo.pojo.FixExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from fix
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fix
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from fix
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.njau.repo.pojo.FixExample">
+        delete from fix
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.njau.repo.pojo.FixDO">
+        insert into fix (id, content, submit_time,
+                         `zone`, room_id, handle_time,
+                         staff_username, `state`)
+        values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{submitTime,jdbcType=TIMESTAMP},
+                #{zone,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP},
+                #{staffUsername,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.njau.repo.pojo.FixDO">
+        insert into fix
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="submitTime != null">
+                submit_time,
+            </if>
+            <if test="zone != null">
+                `zone`,
+            </if>
+            <if test="roomId != null">
+                room_id,
+            </if>
+            <if test="handleTime != null">
+                handle_time,
+            </if>
+            <if test="staffUsername != null">
+                staff_username,
+            </if>
+            <if test="state != null">
+                `state`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="submitTime != null">
+                #{submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zone != null">
+                #{zone,jdbcType=INTEGER},
+            </if>
+            <if test="roomId != null">
+                #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="handleTime != null">
+                #{handleTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffUsername != null">
+                #{staffUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.njau.repo.pojo.FixExample" resultType="java.lang.Long">
+        select count(*) from fix
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update fix
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
+            <if test="record.submitTime != null">
+                submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.zone != null">
+                `zone` = #{record.zone,jdbcType=INTEGER},
+            </if>
+            <if test="record.roomId != null">
+                room_id = #{record.roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.handleTime != null">
+                handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.staffUsername != null">
+                staff_username = #{record.staffUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.state != null">
+                `state` = #{record.state,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update fix
+        set id = #{record.id,jdbcType=INTEGER},
+        content = #{record.content,jdbcType=VARCHAR},
+        submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+        `zone` = #{record.zone,jdbcType=INTEGER},
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+        handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+        staff_username = #{record.staffUsername,jdbcType=VARCHAR},
+        `state` = #{record.state,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.njau.repo.pojo.FixDO">
+        update fix
+        <set>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="submitTime != null">
+                submit_time = #{submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="zone != null">
+                `zone` = #{zone,jdbcType=INTEGER},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="handleTime != null">
+                handle_time = #{handleTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="staffUsername != null">
+                staff_username = #{staffUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                `state` = #{state,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.njau.repo.pojo.FixDO">
+        update fix
+        set content        = #{content,jdbcType=VARCHAR},
+            submit_time    = #{submitTime,jdbcType=TIMESTAMP},
+            `zone`         = #{zone,jdbcType=INTEGER},
+            room_id        = #{roomId,jdbcType=VARCHAR},
+            handle_time    = #{handleTime,jdbcType=TIMESTAMP},
+            staff_username = #{staffUsername,jdbcType=VARCHAR},
+            `state`        = #{state,jdbcType=TINYINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

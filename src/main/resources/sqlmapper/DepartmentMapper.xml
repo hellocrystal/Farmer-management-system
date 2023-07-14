@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njau.repo.mapper.DepartmentMapper">
+    <resultMap id="BaseResultMap" type="com.njau.repo.pojo.DepartmentDO">
+        <id column="dno" jdbcType="INTEGER" property="dno"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="manager" jdbcType="VARCHAR" property="manager"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        dno, dept_name, manager
+    </sql>
+    <select id="selectByExample" parameterType="com.njau.repo.pojo.DepartmentExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from department
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from department
+        where dno = #{dno,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from department
+        where dno = #{dno,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.njau.repo.pojo.DepartmentExample">
+        delete from department
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.njau.repo.pojo.DepartmentDO">
+        insert into department (dno, dept_name, manager)
+        values (#{dno,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{manager,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.njau.repo.pojo.DepartmentDO">
+        insert into department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dno != null">
+                dno,
+            </if>
+            <if test="deptName != null">
+                dept_name,
+            </if>
+            <if test="manager != null">
+                manager,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dno != null">
+                #{dno,jdbcType=INTEGER},
+            </if>
+            <if test="deptName != null">
+                #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.njau.repo.pojo.DepartmentExample" resultType="java.lang.Long">
+        select count(*) from department
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update department
+        <set>
+            <if test="record.dno != null">
+                dno = #{record.dno,jdbcType=INTEGER},
+            </if>
+            <if test="record.deptName != null">
+                dept_name = #{record.deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.manager != null">
+                manager = #{record.manager,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update department
+        set dno = #{record.dno,jdbcType=INTEGER},
+        dept_name = #{record.deptName,jdbcType=VARCHAR},
+        manager = #{record.manager,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.njau.repo.pojo.DepartmentDO">
+        update department
+        <set>
+            <if test="deptName != null">
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                manager = #{manager,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where dno = #{dno,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.njau.repo.pojo.DepartmentDO">
+        update department
+        set dept_name = #{deptName,jdbcType=VARCHAR},
+            manager   = #{manager,jdbcType=VARCHAR}
+        where dno = #{dno,jdbcType=INTEGER}
+    </update>
+</mapper>

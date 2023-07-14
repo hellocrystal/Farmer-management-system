@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njau.repo.mapper.RoomMapper">
+    <resultMap id="BaseResultMap" type="com.njau.repo.pojo.RoomDO">
+        <id column="zone" jdbcType="INTEGER" property="zone"/>
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="area" jdbcType="INTEGER" property="area"/>
+        <result column="floor" jdbcType="INTEGER" property="floor"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        `zone`, id, username, area, `floor`, `time`
+    </sql>
+    <select id="selectByExample" parameterType="com.njau.repo.pojo.RoomExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from room
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="com.njau.repo.pojo.RoomDOKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from room
+        where `zone` = #{zone,jdbcType=INTEGER}
+        and id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.njau.repo.pojo.RoomDOKey">
+        delete
+        from room
+        where `zone` = #{zone,jdbcType=INTEGER}
+          and id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.njau.repo.pojo.RoomExample">
+        delete from room
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.njau.repo.pojo.RoomDO">
+        insert into room (`zone`, id, username,
+                          area, `floor`, `time`)
+        values (#{zone,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+                #{area,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, #{time,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.njau.repo.pojo.RoomDO">
+        insert into room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zone != null">
+                `zone`,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="floor != null">
+                `floor`,
+            </if>
+            <if test="time != null">
+                `time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zone != null">
+                #{zone,jdbcType=INTEGER},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=INTEGER},
+            </if>
+            <if test="floor != null">
+                #{floor,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.njau.repo.pojo.RoomExample" resultType="java.lang.Long">
+        select count(*) from room
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update room
+        <set>
+            <if test="record.zone != null">
+                `zone` = #{record.zone,jdbcType=INTEGER},
+            </if>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.username != null">
+                username = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.area != null">
+                area = #{record.area,jdbcType=INTEGER},
+            </if>
+            <if test="record.floor != null">
+                `floor` = #{record.floor,jdbcType=INTEGER},
+            </if>
+            <if test="record.time != null">
+                `time` = #{record.time,jdbcType=DATE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update room
+        set `zone` = #{record.zone,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=VARCHAR},
+        username = #{record.username,jdbcType=VARCHAR},
+        area = #{record.area,jdbcType=INTEGER},
+        `floor` = #{record.floor,jdbcType=INTEGER},
+        `time` = #{record.time,jdbcType=DATE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.njau.repo.pojo.RoomDO">
+        update room
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=INTEGER},
+            </if>
+            <if test="floor != null">
+                `floor` = #{floor,jdbcType=INTEGER},
+            </if>
+            <if test="time != null">
+                `time` = #{time,jdbcType=DATE},
+            </if>
+        </set>
+        where `zone` = #{zone,jdbcType=INTEGER}
+        and id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.njau.repo.pojo.RoomDO">
+        update room
+        set username = #{username,jdbcType=VARCHAR},
+            area     = #{area,jdbcType=INTEGER},
+            `floor`  = #{floor,jdbcType=INTEGER},
+            `time`   = #{time,jdbcType=DATE}
+        where `zone` = #{zone,jdbcType=INTEGER}
+          and id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

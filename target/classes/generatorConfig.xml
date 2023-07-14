@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="testTables" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="autoDelimitKeywords" value="true" />
+        <property name="beginningDelimiter" value="`" />
+        <property name="endingDelimiter" value="`" />
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="DOExample$"/>
+            <property name="replaceString" value="Example"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释,true：是,false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/court?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+                        userId="root"
+                        password="123456">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 指定javaBean生成的位置
+        targetPackage：生成的类要放的包，真实的包受enableSubPackages属性控制；
+        targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，如果目录不存在，MBG不会自动建目录
+        -->
+
+        <javaModelGenerator targetPackage="com.njau.repo.pojo" targetProject="src/main/java">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false；如果多个数据库改为true分目录 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter；-->
+            <property name="constructorBased" value="false"/>
+            <!-- 设置一个根对象 -->
+            <!--            <property name="rootClass" value="BaseDO"/>-->
+        </javaModelGenerator>
+
+    <!--  指定mapper映射文件生成的位置
+       targetPackage、targetProject同javaModelGenerator中作用一样-->
+        <sqlMapGenerator targetPackage="sqlmapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 指定mapper接口生成的位置
+         targetPackage、targetProject同javaModelGenerator中作用一样
+         -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.njau.repo.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table tableName="carport" domainObjectName="CarportDO" mapperName="CarportMapper"/>
+        <table tableName="complain" domainObjectName="ComplainDO" mapperName="ComplainMapper"/>
+        <table tableName="department" domainObjectName="DepartmentDO" mapperName="DepartmentMapper"/>
+        <table tableName="fee" domainObjectName="FeeDO" mapperName="FeeMapper"/>
+        <table tableName="fee_item" domainObjectName="FeeItemDO" mapperName="FeeItemMapper"/>
+        <table tableName="fix" domainObjectName="FixDO" mapperName="FixMapper"/>
+        <table tableName="manage_carport" domainObjectName="ManageCarportDO" mapperName="ManageCarportMapper"/>
+        <table tableName="notice" domainObjectName="NoticeDO" mapperName="NoticeMapper"/>
+        <table tableName="room" domainObjectName="RoomDO" mapperName="RoomMapper"/>
+        <table tableName="staff" domainObjectName="StaffDO" mapperName="StaffMapper"/>
+        <table tableName="user" domainObjectName="UserDO" mapperName="UserMapper"/>
+
+    </context>
+
+</generatorConfiguration>

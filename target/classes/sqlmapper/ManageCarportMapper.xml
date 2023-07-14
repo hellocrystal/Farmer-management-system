@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njau.repo.mapper.ManageCarportMapper">
+    <resultMap id="BaseResultMap" type="com.njau.repo.pojo.ManageCarportDO">
+        <id column="zone_id" jdbcType="VARCHAR" property="zoneId"/>
+        <id column="carport_id" jdbcType="INTEGER" property="carportId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="result" jdbcType="TINYINT" property="result"/>
+        <result column="staff_username" jdbcType="VARCHAR" property="staffUsername"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        zone_id, carport_id, `type`, `result`, staff_username
+    </sql>
+    <select id="selectByExample" parameterType="com.njau.repo.pojo.ManageCarportExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from manage_carport
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="com.njau.repo.pojo.ManageCarportDOKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manage_carport
+        where zone_id = #{zoneId,jdbcType=VARCHAR}
+        and carport_id = #{carportId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.njau.repo.pojo.ManageCarportDOKey">
+        delete
+        from manage_carport
+        where zone_id = #{zoneId,jdbcType=VARCHAR}
+          and carport_id = #{carportId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.njau.repo.pojo.ManageCarportExample">
+        delete from manage_carport
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.njau.repo.pojo.ManageCarportDO">
+        insert into manage_carport (zone_id, carport_id, `type`,
+                                    `result`, staff_username)
+        values (#{zoneId,jdbcType=VARCHAR}, #{carportId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+                #{result,jdbcType=TINYINT}, #{staffUsername,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.njau.repo.pojo.ManageCarportDO">
+        insert into manage_carport
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zoneId != null">
+                zone_id,
+            </if>
+            <if test="carportId != null">
+                carport_id,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="result != null">
+                `result`,
+            </if>
+            <if test="staffUsername != null">
+                staff_username,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zoneId != null">
+                #{zoneId,jdbcType=VARCHAR},
+            </if>
+            <if test="carportId != null">
+                #{carportId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=TINYINT},
+            </if>
+            <if test="staffUsername != null">
+                #{staffUsername,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.njau.repo.pojo.ManageCarportExample" resultType="java.lang.Long">
+        select count(*) from manage_carport
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update manage_carport
+        <set>
+            <if test="record.zoneId != null">
+                zone_id = #{record.zoneId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.carportId != null">
+                carport_id = #{record.carportId,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                `type` = #{record.type,jdbcType=TINYINT},
+            </if>
+            <if test="record.result != null">
+                `result` = #{record.result,jdbcType=TINYINT},
+            </if>
+            <if test="record.staffUsername != null">
+                staff_username = #{record.staffUsername,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update manage_carport
+        set zone_id = #{record.zoneId,jdbcType=VARCHAR},
+        carport_id = #{record.carportId,jdbcType=INTEGER},
+        `type` = #{record.type,jdbcType=TINYINT},
+        `result` = #{record.result,jdbcType=TINYINT},
+        staff_username = #{record.staffUsername,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.njau.repo.pojo.ManageCarportDO">
+        update manage_carport
+        <set>
+            <if test="type != null">
+                `type` = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="result != null">
+                `result` = #{result,jdbcType=TINYINT},
+            </if>
+            <if test="staffUsername != null">
+                staff_username = #{staffUsername,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where zone_id = #{zoneId,jdbcType=VARCHAR}
+        and carport_id = #{carportId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.njau.repo.pojo.ManageCarportDO">
+        update manage_carport
+        set `type`         = #{type,jdbcType=TINYINT},
+            `result`       = #{result,jdbcType=TINYINT},
+            staff_username = #{staffUsername,jdbcType=VARCHAR}
+        where zone_id = #{zoneId,jdbcType=VARCHAR}
+          and carport_id = #{carportId,jdbcType=INTEGER}
+    </update>
+</mapper>
